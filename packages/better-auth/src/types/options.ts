@@ -9,6 +9,7 @@ import type { KyselyDatabaseType } from "../adapters/kysely-adapter/types";
 import type { FieldAttribute } from "../db";
 import type { EligibleCookies } from "../internal-plugins";
 import type { RateLimit } from "./models";
+import type { RateLimiterAdapter } from "../api/rate-limiter/adapters/types";
 
 export interface BetterAuthOptions {
 	/**
@@ -291,6 +292,7 @@ export interface BetterAuthOptions {
 			get: (key: string) => Promise<RateLimit | undefined>;
 			set: (key: string, value: RateLimit) => Promise<void>;
 		};
+		adapter?: RateLimiterAdapter;
 	};
 	/**
 	 * Advanced options

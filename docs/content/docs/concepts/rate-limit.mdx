@@ -8,8 +8,6 @@ Better Auth includes a built-in rate limiter to help manage traffic and prevent 
 - Window: 60 seconds
 - Max Requests: 100 requests
 
-You can easily customize these settings by passing the rateLimit object to the betterAuth function.
-
 ```ts title="auth.ts"
 import { betterAuth } from "better-auth";
 
@@ -141,7 +139,7 @@ await client.signIn.email({
 })
 ```
 
-### Schema
+## Schema
 
 If you are using a database to store rate limit data you need this schema:
 
@@ -171,3 +169,23 @@ Table Name: `rateLimit`
         description: "Number of requests made in the window" 
         }]}
     />
+
+## Security
+
+By default, the rate limters uses session token to identify the user. Since, the session token is signed and contains user information, it can be used to identify the user across different requests. 
+
+If the session token is not available, the rate limter will use the IP address to identify the user. This is done by hashing the IP address and using the hashed value to identify the user.
+
+You can use the `getKey` function to customize the key that is used to identify the user. This can be useful if you want to use a different identifier for the user.
+
+```ts title="auth.ts"
+import { betterAuth } from "better-auth";
+
+export const auth = betterAuth({
+    rateLimit: {
+        getKey: async (context) => {
+            // return the key that is used to identify the user
+        }
+    }
+})
+```
