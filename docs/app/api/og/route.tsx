@@ -1,4 +1,3 @@
-import { Logo } from "@/components/logo";
 import { ImageResponse } from "@vercel/og";
 import { z } from "zod";
 export const runtime = "edge";
@@ -113,11 +112,7 @@ export async function GET(req: Request) {
 		const geistMono = await fetch(
 			new URL("../../../assets/GeistMono.ttf", import.meta.url),
 		).then((res) => res.arrayBuffer());
-		const ogData = {
-			heading: "something",
-			mode: "dark",
-			type: "something",
-		};
+
 		const url = new URL(req.url);
 		const urlParamsValues = Object.fromEntries(url.searchParams);
 		// this is used with the above example
@@ -219,21 +214,20 @@ export async function GET(req: Request) {
 					</svg>
 					<div tw="flex flex-col flex-1 py-10">
 						<svg
-							width="100"
-							height="95"
+							width="90"
+							height="75"
 							viewBox="0 0 60 45"
-							fill="none"
-							className="mb-10"
+							fill={`${mode === "dark" ? "white" : "black"}`}
+							className="w-10 h-10"
 							xmlns="http://www.w3.org/2000/svg"
 						>
 							<path
 								fill-rule="evenodd"
-								stroke={paint}
 								clip-rule="evenodd"
 								d="M0 0H15V15H30V30H15V45H0V30V15V0ZM45 30V15H30V0H45H60V15V30V45H45H30V30H45Z"
-								className="fill-black dark:fill-white"
 							/>
 						</svg>
+
 						<div
 							style={{ fontFamily: "GeistMono", fontWeight: "normal" }}
 							tw="relative flex mt-10 text-xl uppercase font-bold tracking-tight"
